@@ -1,20 +1,97 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Text, View, Button, StyleSheet, TextInput } from 'react-native';
+import { useState } from 'react';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const Tab = createBottomTabNavigator();
+
+function WelcomePage({ nameSetter }) {
+    return (
+      <View>
+        <Text>Welcome!</Text>
+        <Text>What can I call you?</Text>
+        <TextInput onChangeText={(n) => nameSetter(n)}></TextInput>
+      </View>
+    )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+function GetInfo({ name }) {
+  return (
+    <View>
+      <Text>Hello {name}!</Text>
+    </View>
+  )
+}
+
+function App() {
+  const [name, nameSetter] = useState("");
+
+  return (
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Welcome">
+          {() => <WelcomePage nameSetter={nameSetter}/>}
+        </Tab.Screen>
+        <Tab.Screen name="Hello">
+          {() => <GetInfo name={name}/>}
+        </Tab.Screen>
+      </Tab.Navigator>
+    </NavigationContainer>
+  )
+}
+
+export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const Tab = createBottomTabNavigator();
+
+
+// export default function App() {
+//   return (
+//     <NavigationContainer>
+//       <Tab.Navigator>
+//         <Tab.Screen name="To-Do" component={TodoScreen} />
+//         <Tab.Screen name="Settings" component={SettingsScreen} />
+//       </Tab.Navigator>
+//     </NavigationContainer>
+//   )
+// }
